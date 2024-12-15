@@ -3,10 +3,14 @@ import { Types } from '@hotmeshio/hotmesh';
 import OpenAI from 'openai';
 import { APIErrorResponse, APIResponse, ChatMessage, IndexFormat } from '../types/gpt';
 
-console.log('hello!!!!!!!!@@!!!', Object.keys(process.env));
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+let openai: OpenAI;
+try {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  });
+} catch (error) {
+  console.error(error)
+}
 
 class GPTService {
   /**
@@ -42,7 +46,6 @@ class GPTService {
       ...message,
       content: this.normalizeWhitespace(message.content)
     }));
-    console.log(cleaned, JSON.stringify(cleaned).length);
     return cleaned;
   }
 

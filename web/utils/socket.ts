@@ -13,7 +13,6 @@ class Socket {
   }
 
   public broadcast(event: string, data: any): void {
-    console.log('broadcasting socket event!!!', event, data);
     this.io.emit(event, data);
   }
 }

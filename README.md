@@ -61,12 +61,6 @@ Create a `.hotmesh.config.json` file in your project root (next to your `docker-
   },
   "schemas": {
     "default": {
-      "$entity": {
-        "type": "TAG",
-        "indexed": false,
-        "primitive": "string",
-        "required": true
-      },
       "id": {
         "type": "TAG",
         "sortable": false
@@ -82,20 +76,18 @@ Create a `.hotmesh.config.json` file in your project root (next to your `docker-
     }
   },
   "entities": {
-    "default": {}
+    "default": {
+      "name": "default",
+      "schema": "default"
+    }
   },
   "namespaces": {
     "meshdata": {
       "name": "MeshData Demo",
       "type": "meshdata",
       "label": "MeshData Demo",
-      "entities": [
-        {
-          "type": "default",
-          "schema": "default",
-          "class": "default"
-        }
-      ]
+      "module": "meshdata",
+      "entities": ["default"]
     }
   }
 }
@@ -126,7 +118,7 @@ services:
       - NODE_ENV=production
       - PORT=3010
     volumes:
-      - ./my-hotmesh-config/.hotmesh.config.json:/app/.hotmesh.config.json:ro
+      - ./.hotmesh.config.json:/app/.hotmesh.config.json:ro
     ports:
       - "3010:3010"
     depends_on:

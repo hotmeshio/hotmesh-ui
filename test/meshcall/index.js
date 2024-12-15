@@ -1,6 +1,6 @@
 const { Client: PostgresClient } = require('pg');
 const { MeshCall } = require('@hotmeshio/hotmesh');
-console.log('\n* initializing meshcall demo ...\n');
+console.log('\n* seeding meshcall data ...\n');
 
 
 (async () => {

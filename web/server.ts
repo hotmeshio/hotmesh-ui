@@ -14,7 +14,6 @@ import { Socket } from './utils/socket';
 import { configureLogger } from './utils/logger';
 import { initializeHotMesh } from '../meshdata';
 
-console.log('server ok?')
 const app = express();
 const logger = configureLogger(app);
 

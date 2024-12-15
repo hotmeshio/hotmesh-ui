@@ -8,19 +8,17 @@
         "class": "pg",
         "options": {
           "connectionString": "postgresql://postgres:password@postgres:5432/hotmesh"
-        },
-        "readonly": true
+        }
       }
     }
   },
   "schemas": {
+    "hotmesh": {
+      "howdy": {},
+      "custom": {},
+      "bool": {}
+    },
     "default": {
-      "$entity": {
-        "type": "TAG",
-        "indexed": false,
-        "primitive": "string",
-        "required": true
-      },
       "id": {
         "type": "TAG",
         "sortable": false
@@ -36,11 +34,15 @@
     }
   },
   "entities": {
-    "default": {
-      "name": "default",
+    "hotmesh": {
       "type": "default",
-      "schema": "default",
-      "class": "default"
+      "name": "hotmesh",
+      "schema": "hotmesh"
+    },
+    "default": {
+      "type": "default",
+      "name": "default",
+      "schema": "default"
     }
   },
   "namespaces": {
@@ -49,7 +51,7 @@
       "type": "hotmesh",
       "label": "HotMesh Demo",
       "module": "hotmesh",
-      "entities": ["default"]
+      "entities": ["hotmesh"]
     },
     "meshcall": {
       "name": "MeshCall Demo",

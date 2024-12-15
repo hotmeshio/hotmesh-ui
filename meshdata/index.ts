@@ -50,6 +50,8 @@ export async function initializeHotMesh() {
   for (const [dbKey, dbConfig] of Object.entries(config.databases as Record<string, any>)) {
     const dbConnection = { ...dbConfig };
     if (dbConnection.connection) {
+      //always make the dashboard 'readonly' it's only there to report
+      dbConnection.connection.readonly = true;
       //concise connection format
       if (dbConnection.connection?.class) {
         if(CLASS_MAP[dbConnection.connection.class]) {
@@ -64,7 +66,7 @@ export async function initializeHotMesh() {
         }        
       }
     }
-    console.log('registering database', dbKey, dbConfig, dbConfig.connection?.store?.class, dbConfig.connection?.store?.options);
+    console.log('Registering database', dbKey);
     MeshOS.registerDatabase(dbKey, dbConfig);
   }
 
@@ -73,14 +75,11 @@ export async function initializeHotMesh() {
     MeshOS.registerSchema(schemaKey, schemaVal as Types.WorkflowSearchSchema);
   }
 
-  // Register Entities (entities are nouns like 'user' and contain a schema field that defines the fields in the entity)
+  // Register Entities (entities are nouns like 'user' and contain a schema that defines the fields in the entity)
   for (const [entityKey, entityVal] of Object.entries(config.entities as Record<string, Types.Entity>)) {
     entityVal.schema = config.schemas[entityKey] || entityVal.schema
-    const entityClass = ENTITY_MAP[entityKey];
-    entityVal.class = entityClass || entityVal.class;
-    if (!entityClass) {
-      throw new Error(`Entity class mapping not found for key: ${entityKey}`);
-    }
+    const entityClass = ENTITY_MAP['default'];
+    entityVal.class = entityClass;
     MeshOS.registerClass(entityKey, entityClass);
     MeshOS.registerEntity(entityKey, entityVal);
   }
@@ -93,8 +92,6 @@ export async function initializeHotMesh() {
 
     MeshOS.registerNamespace(nsKey, nsConfig);
   }
-  console.log(MeshOS.namespaces);
-  console.log(MeshOS.entities);
 
   // Register Profiles (optional: if you have multiple DB profiles)
   for (const dbKey of Object.keys(config.databases)) {

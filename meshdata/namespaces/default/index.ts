@@ -6,7 +6,6 @@ import { MeshOS } from '@hotmeshio/hotmesh';
  */
 class DefaultEntity extends MeshOS {
   async connect() {
-    console.log('default entity connected!');
     //no-op; default entity doesn't have workers in the dashboard
   }
 }
