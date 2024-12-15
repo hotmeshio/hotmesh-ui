@@ -1,0 +1,79 @@
+{
+  "databases": {
+    "redis": {
+      "name": "Redis",
+      "label": "redis/redis-stack7.2.0",
+      "search": true,
+      "connection": {
+        "class": "redis",
+        "options": {
+          "url": "redis://:key_admin@redis:6379"
+        }
+      }
+    },
+    "postgres": {
+      "name": "Postgres",
+      "label": "postgres:latest",
+      "search": false,
+      "connection": {
+        "store": {
+          "class": "pg",
+          "options": {
+            "connectionString": "postgresql://postgres:password@postgres:5432/hotmesh"
+          }
+        },
+        "stream": {
+          "class": "pg",
+          "options": {
+            "connectionString": "postgresql://postgres:password@postgres:5432/hotmesh"
+          }
+        },
+        "sub": {
+          "class": "nats",
+          "options": {
+            "servers": ["nats:4222"]
+          }
+        }
+      }
+    }
+  },
+  "schemas": {
+    "default": {
+      "$entity": {
+        "type": "TAG",
+        "indexed": false,
+        "primitive": "string",
+        "required": true
+      },
+      "id": {
+        "type": "TAG",
+        "sortable": false
+      },
+      "plan": {
+        "type": "TAG",
+        "sortable": true
+      },
+      "active": {
+        "type": "TEXT",
+        "sortable": false
+      }
+    }
+  },
+  "entities": {
+    "default": {}
+  },
+  "namespaces": {
+    "meshdata": {
+      "name": "MeshData Demo",
+      "type": "meshdata",
+      "label": "MeshData Demo",
+      "entities": [
+        {
+          "type": "default",
+          "schema": "default",
+          "class": "default"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "databases": {
+    "postgres": {
+      "name": "Postgres",
+      "label": "postgres:latest",
+      "search": false,
+      "connection": {
+        "class": "pg",
+        "options": {
+          "connectionString": "postgresql://postgres:password@postgres:5432/hotmesh"
+        },
+        "readonly": true
+      }
+    }
+  },
+  "schemas": {
+    "default": {
+      "$entity": {
+        "type": "TAG",
+        "indexed": false,
+        "primitive": "string",
+        "required": true
+      },
+      "id": {
+        "type": "TAG",
+        "sortable": false
+      },
+      "plan": {
+        "type": "TAG",
+        "sortable": true
+      },
+      "active": {
+        "type": "TEXT",
+        "sortable": false
+      }
+    }
+  },
+  "entities": {
+    "default": {
+      "name": "default",
+      "type": "default",
+      "schema": "default",
+      "class": "default"
+    }
+  },
+  "namespaces": {
+    "hotmesh": {
+      "name": "HotMesh Demo",
+      "type": "hotmesh",
+      "label": "HotMesh Demo",
+      "module": "hotmesh",
+      "entities": ["default"]
+    },
+    "meshcall": {
+      "name": "MeshCall Demo",
+      "type": "meshcall",
+      "label": "MeshCall Demo",
+      "module": "meshcall",
+      "entities": ["default"]
+    },
+    "meshflow": {
+      "name": "MeshFlow Demo",
+      "type": "meshflow",
+      "label": "MeshFlow Demo",
+      "module": "meshflow",
+      "entities": ["default"]
+    },
+    "meshdata": {
+      "name": "MeshData Demo",
+      "type": "meshdata",
+      "label": "MeshData Demo",
+      "module": "meshdata",
+      "entities": ["default"]
+    }
+  }
+}
