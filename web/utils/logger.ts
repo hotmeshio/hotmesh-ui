@@ -5,7 +5,7 @@ import { Application } from 'express';
 export const configureLogger = (app: Application): Logger => {
   // Create a Winston logger instance with custom settings
   const logger = winston.createLogger({
-    level: 'info',
+    level: process.env.LOG_LEVEL ?? 'info',
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.json(),
@@ -22,11 +22,11 @@ export const configureLogger = (app: Application): Logger => {
     winstonInstance: logger,
     msg: 'HTTP {{req.method}} {{req.url}} | Status: {{res.statusCode}} | Duration: {{res.responseTime}}ms | IP: {{req.ip}}',
     expressFormat: false,
-    colorize: process.env.NODE_ENV === 'development',
+    colorize: false,
     statusLevels: {
       success: 'info',
       warn: 'warn',
-      error: 'error'
+      error: 'error',
     },
     ignoreRoute: (req, res) => {
       if (req.url === '/health' || req.url === '/api/v1/meshdata/rollCall') {

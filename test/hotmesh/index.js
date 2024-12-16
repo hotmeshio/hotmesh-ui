@@ -1,5 +1,5 @@
 const { Client: PostgresClient } = require('pg');
-const { HotMesh } = require('@hotmeshio/hotmesh');
+const { HotMesh, Utils } = require('@hotmeshio/hotmesh');
 console.log('seeding hotmesh test data ...\n');
 
 (async () => {
@@ -48,6 +48,8 @@ console.log('seeding hotmesh test data ...\n');
           properties:
             input:
               type: string
+            workflowId:
+              type: string
 
       output:
         schema:
@@ -59,6 +61,9 @@ console.log('seeding hotmesh test data ...\n');
       activities:
         trigger1:
           type: trigger
+          stats:
+            id: '{$self.output.data.workflowId}'
+
         worker1:
           type: worker
           topic: work.do
@@ -87,9 +92,10 @@ console.log('seeding hotmesh test data ...\n');
   await hotMesh.activate('1');
 
   //5) run input test
+  const workflowId = `hotmesh-${Utils.guid()}`
   const jobId = await hotMesh.pub(
     'hotmesh.test',
-    { input : 'hello' },
+    { input : 'hello', workflowId },
     { data: {}, metadata: {} },
     {
       search: {
