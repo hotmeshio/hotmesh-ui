@@ -11,7 +11,7 @@ HotMesh UI is configured through a `.hotmesh.config.json` file, which should be 
 - **Entities**: Logical building blocks that use classes and schemas for orchestrations.
 - **Namespaces**: Groupings of entities that provide a logical structure for workflows and data.
 
-**Important:** Unlike simpler UIs (e.g., Temporal UI), which rely heavily on environment variables, HotMesh UI uses this structured configuration file for robust flexibility. By editing `.hotmesh.config.json`, you can change backends, namespaces, and schemas without altering application code.
+**Important:** HotMesh UI uses this structured configuration file for robust flexibility. By editing `.hotmesh.config.json`, you can change backends, namespaces, and schemas without altering application code.
 
 ## Example Configuration
 
