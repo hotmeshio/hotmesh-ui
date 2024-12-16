@@ -22,57 +22,23 @@ Create a `.hotmesh.config.json` file in your project root (next to your `docker-
 ```json
 {
   "databases": {
-    "redis": {
-      "name": "Redis",
-      "label": "redis/redis-stack7.2.0",
-      "search": true,
-      "connection": {
-        "class": "redis",
-        "options": {
-          "url": "redis://:key_admin@redis:6379"
-        }
-      }
-    },
     "postgres": {
       "name": "Postgres",
       "label": "postgres:latest",
       "search": false,
       "connection": {
-        "store": {
-          "class": "pg",
-          "options": {
-            "connectionString": "postgresql://postgres:password@postgres:5432/hotmesh"
-          }
-        },
-        "stream": {
-          "class": "pg",
-          "options": {
-            "connectionString": "postgresql://postgres:password@postgres:5432/hotmesh"
-          }
-        },
-        "sub": {
-          "class": "nats",
-          "options": {
-            "servers": ["nats:4222"]
-          }
+        "class": "pg",
+        "options": {
+          "connectionString": "postgresql://postgres:password@postgres:5432/hotmesh"
         }
       }
     }
   },
   "schemas": {
     "default": {
-      "id": {
-        "type": "TAG",
-        "sortable": false
-      },
-      "plan": {
-        "type": "TAG",
-        "sortable": true
-      },
-      "active": {
-        "type": "TEXT",
-        "sortable": false
-      }
+      "id": {},
+      "plan": {},
+      "active": {}
     }
   },
   "entities": {
@@ -122,23 +88,8 @@ services:
     ports:
       - "3010:3010"
     depends_on:
-      redis:
-        condition: service_healthy
       postgres:
         condition: service_healthy
-
-  redis:
-    image: redis/redis-stack:7.2.0-v10
-    environment:
-      REDIS_ARGS: "--requirepass key_admin"
-    ports:
-      - "6399:6379"
-      - "8001:8001"
-    healthcheck:
-      test: ["CMD", "redis-cli", "-h", "localhost", "-p", "6379", "-a", "key_admin", "ping"]
-      interval: 5s
-      timeout: 10s
-      retries: 3
 
   postgres:
     image: postgres:latest
@@ -158,10 +109,10 @@ services:
 3. **Start the environment:**  
    Run:
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
-   Once running, visit `http://localhost:3010` to access the HotMesh UI.
+   Once running, the dashboard will be available at the configured port (e.g., `http://localhost:3010`)
 
 ## Environment Variables
 
